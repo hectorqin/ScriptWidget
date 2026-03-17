@@ -90,7 +90,7 @@ struct ScriptWidgetAttributeFontModifier: ViewModifier {
         if font == nil {
             if let fontSize = Double(name) {
                 if let designName = designName, let design = Self.getFontDesignFromStringName(designName)  {
-                    font = .system(size: 20, weight: .regular, design: design)
+                    font = .system(size: CGFloat(fontSize), weight: .regular, design: design)
                 } else {
                     font = .system(size: CGFloat(fontSize))
                 }
