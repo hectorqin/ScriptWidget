@@ -9,9 +9,9 @@ import SwiftUI
 
 @main
 struct ScriptWidgetMacApp: App {
-    
+
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate;
-    
+
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -26,20 +26,20 @@ struct ScriptWidgetMacApp: App {
                         NotificationCenter.default.post(name: PreviewService.updateNotification, object: nil, userInfo: nil)
                     }
                 }.keyboardShortcut("s")
-                
+
                 Button("Run") {
                     NotificationCenter.default.post(name: PreviewService.updateNotification, object: nil, userInfo: nil)
                 }.keyboardShortcut("r")
-                
+
                 Button("Open Scripts Directory") {
                     MacKitUtil.revealInFinder(sharedScriptManager.scriptDirectory.path)
                 }.keyboardShortcut("o")
-                
+
                 Button("Update iCloud Scripts") {
                     sharedScriptManager.requestUpdateICloudScripts()
                 }.keyboardShortcut("u")
             }
-            
+
             CommandGroup(replacing: .help) {
                 Button("Discord") {
                     NSWorkspace.shared.open(URL(string: "https://discord.gg/eGzEaP6TzR")!)
@@ -57,6 +57,10 @@ struct ScriptWidgetMacApp: App {
                     NSWorkspace.shared.open(URL(string: "https://xnu.app")!)
                 }
             }
+        }
+
+        Settings {
+            SettingAIView()
         }
     }
 }

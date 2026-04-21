@@ -14,17 +14,21 @@ struct SidebarView: View {
     @ObservedObject var store: SharedAppStore
     // create
     @State private var createShowingSheet = false
-    
+
+    // AI generate
+    @State private var aiGenerateShowingSheet = false
+    @State private var aiConfigAlertShown = false
+
     // rename
     @State private var renameCurrentName = ""
     @State private var renameInputName = ""
     @State private var renameShowingSheet = false
-    
+
     // delete
     @State private var deleteCurrentName = ""
     @State private var deleteShowingSheet = false
-    
-    
+
+
     var body: some View {
         content
             .frame(minWidth:200, maxWidth: 300, idealHeight: 250)
@@ -36,6 +40,14 @@ struct SidebarView: View {
             }
             .sheet(isPresented: $createShowingSheet) {
                 CreateGuideView()
+            }
+            .sheet(isPresented: $aiGenerateShowingSheet) {
+                AIGenerateWindowView()
+            }
+            .alert("Configure AI First", isPresented: $aiConfigAlertShown) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text("Open Settings (⌘,) → AI to add your OpenAI API key, then come back to generate with AI.")
             }
             .toolbar {
                 ToolbarItem(placement: .automatic) {
@@ -51,6 +63,18 @@ struct SidebarView: View {
                     } label: {
                         Image(systemName: "plus.circle")
                     }
+                }
+                ToolbarItem(placement: .automatic) {
+                    Button {
+                        if AISettingsStore.shared.load().isConfigured {
+                            self.aiGenerateShowingSheet = true
+                        } else {
+                            self.aiConfigAlertShown = true
+                        }
+                    } label: {
+                        Image(systemName: "sparkles")
+                    }
+                    .help("Generate with AI")
                 }
             }
     }

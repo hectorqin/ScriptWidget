@@ -33,24 +33,29 @@ class CreateGuideDataObject: ObservableObject {
 
 struct CreateGuideView: View {
     @ObservedObject var dataObject = CreateGuideDataObject()
-    
+
     @Environment(\.presentationMode) var presentationMode
-        
+
+    @State private var showingAIGenerate = false
+    @State private var showingAIConfigAlert = false
+
     var body: some View {
         NavigationView {
             List {
+                aiRow
+
                 ForEach(dataObject.models) { item in
                     NavigationLink(destination: ScriptCodeEditorView(mode: .creator,scriptModel:item, actionCreate: {
                         // create
                         guard let content = item.package.readMainFile().0 else { return }
-                        
+
                         // image copy path
                         let imageCopyPath = item.package.imagePath
-                        
+
                         _ = sharedScriptManager.createScript(content: content, recommendPackageName: item.name, imageCopyPath: imageCopyPath)
-                        
+
                         NotificationCenter.default.post(name: ScriptWidgetHomeViewDataObject.scriptCreateNotification, object: nil)
-                        
+
                         // dismiss
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
                             self.presentationMode.wrappedValue.dismiss()
@@ -71,7 +76,50 @@ struct CreateGuideView: View {
                     }
                 }
             }
+            .background(
+                NavigationLink(isActive: $showingAIGenerate) {
+                    AIGenerateView()
+                } label: { EmptyView() }
+                .hidden()
+            )
+            .alert("Configure AI First", isPresented: $showingAIConfigAlert) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text("Open Settings → AI to add your OpenAI API key, then come back to generate with AI.")
+            }
         }
+    }
+
+    private var aiRow: some View {
+        Button {
+            if AISettingsStore.shared.load().isConfigured {
+                showingAIGenerate = true
+            } else {
+                showingAIConfigAlert = true
+            }
+        } label: {
+            HStack(spacing: 12) {
+                Image(systemName: "sparkles")
+                    .font(.title2)
+                    .frame(width: 40, height: 40)
+                    .background(Color.accentColor.opacity(0.15))
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Generate with AI")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                    Text("Describe your widget and let the AI build it.")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
     }
 }
 
