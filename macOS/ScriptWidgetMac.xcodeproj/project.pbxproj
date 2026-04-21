@@ -183,6 +183,17 @@
 		F2CA7ADB27A23BED00569709 /* ZipArchive in Frameworks */ = {isa = PBXBuildFile; productRef = F2CA7ADA27A23BED00569709 /* ZipArchive */; };
 		F2D2B24EA420469CBA72564F /* ReloadWidgetAppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8445DB90E4A34EB19697BAEB /* ReloadWidgetAppIntent.swift */; };
 		F2F90FC427970E3E003095A9 /* CreateGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F90FC327970E3E003095A9 /* CreateGuideView.swift */; };
+		A202000100000000000000B0 /* AISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201000100000000000000B0 /* AISettings.swift */; };
+		A202000200000000000000B0 /* AIReferenceSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201000200000000000000B0 /* AIReferenceSnapshot.swift */; };
+		A202000300000000000000B0 /* PromptBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201000300000000000000B0 /* PromptBuilder.swift */; };
+		A202000400000000000000B0 /* AIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201000400000000000000B0 /* AIClient.swift */; };
+		A202000500000000000000B0 /* AgentRuntimeBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201000500000000000000B0 /* AgentRuntimeBridge.swift */; };
+		A202000600000000000000B0 /* AgentLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201000600000000000000B0 /* AgentLoop.swift */; };
+		A202000700000000000000B0 /* AIGenerateSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201000700000000000000B0 /* AIGenerateSession.swift */; };
+		A202000800000000000000B0 /* AIGenerateProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201000800000000000000B0 /* AIGenerateProgressView.swift */; };
+		A204000100000000000000B0 /* SettingAIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A203000100000000000000B0 /* SettingAIView.swift */; };
+		A204000200000000000000B0 /* AIGenerateWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A203000200000000000000B0 /* AIGenerateWindowView.swift */; };
+		A206000300000000000000B0 /* SwiftOpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = A206000200000000000000B0 /* SwiftOpenAI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -321,6 +332,16 @@
 		F29118D92792B90700B860B0 /* WKWebViewJavascriptBridgeJS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKWebViewJavascriptBridgeJS.swift; sourceTree = "<group>"; };
 		F29118E72792CCDE00B860B0 /* PreviewWidgetSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewWidgetSize.swift; sourceTree = "<group>"; };
 		F2F90FC327970E3E003095A9 /* CreateGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGuideView.swift; sourceTree = "<group>"; };
+		A201000100000000000000B0 /* AISettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AISettings.swift; sourceTree = "<group>"; };
+		A201000200000000000000B0 /* AIReferenceSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIReferenceSnapshot.swift; sourceTree = "<group>"; };
+		A201000300000000000000B0 /* PromptBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptBuilder.swift; sourceTree = "<group>"; };
+		A201000400000000000000B0 /* AIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIClient.swift; sourceTree = "<group>"; };
+		A201000500000000000000B0 /* AgentRuntimeBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentRuntimeBridge.swift; sourceTree = "<group>"; };
+		A201000600000000000000B0 /* AgentLoop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentLoop.swift; sourceTree = "<group>"; };
+		A201000700000000000000B0 /* AIGenerateSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIGenerateSession.swift; sourceTree = "<group>"; };
+		A201000800000000000000B0 /* AIGenerateProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIGenerateProgressView.swift; sourceTree = "<group>"; };
+		A203000100000000000000B0 /* SettingAIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAIView.swift; sourceTree = "<group>"; };
+		A203000200000000000000B0 /* AIGenerateWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIGenerateWindowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -328,6 +349,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A206000300000000000000B0 /* SwiftOpenAI in Frameworks */,
 				F2B99C4327B8BE5E009584A3 /* SDWebImageSwiftUI in Frameworks */,
 				F29118252791D38E00B860B0 /* SwiftyJSON in Frameworks */,
 				D1995D0929536CCE00D1BD94 /* Vapor in Frameworks */,
@@ -352,6 +374,7 @@
 		D1995C5029536B7300D1BD94 /* ScriptWidgetRuntime */ = {
 			isa = PBXGroup;
 			children = (
+				A205000100000000000000B0 /* AI */,
 				D1995D0429536BF000D1BD94 /* Resource */,
 				D1995CF429536BC700D1BD94 /* Common */,
 				D1995C5529536BB800D1BD94 /* Widget */,
@@ -636,6 +659,8 @@
 		F29117D6279101DE00B860B0 /* ScriptWidgetMac */ = {
 			isa = PBXGroup;
 			children = (
+				A205000200000000000000B0 /* AIGenerate */,
+				A205000300000000000000B0 /* Settings */,
 				F2461643279F87B900C3D90F /* SwiftUIMacKit */,
 				F246163C279E18CE00C3D90F /* Common */,
 				F2F90FC227970DEA003095A9 /* Create */,
@@ -773,6 +798,38 @@
 			path = Create;
 			sourceTree = "<group>";
 		};
+		A205000100000000000000B0 /* AI */ = {
+			isa = PBXGroup;
+			children = (
+				A201000100000000000000B0 /* AISettings.swift */,
+				A201000200000000000000B0 /* AIReferenceSnapshot.swift */,
+				A201000300000000000000B0 /* PromptBuilder.swift */,
+				A201000400000000000000B0 /* AIClient.swift */,
+				A201000500000000000000B0 /* AgentRuntimeBridge.swift */,
+				A201000600000000000000B0 /* AgentLoop.swift */,
+				A201000700000000000000B0 /* AIGenerateSession.swift */,
+				A201000800000000000000B0 /* AIGenerateProgressView.swift */,
+			);
+			name = AI;
+			path = ../Shared/ScriptWidgetRuntime/AI;
+			sourceTree = "<group>";
+		};
+		A205000200000000000000B0 /* AIGenerate */ = {
+			isa = PBXGroup;
+			children = (
+				A203000200000000000000B0 /* AIGenerateWindowView.swift */,
+			);
+			path = AIGenerate;
+			sourceTree = "<group>";
+		};
+		A205000300000000000000B0 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				A203000100000000000000B0 /* SettingAIView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -792,6 +849,7 @@
 			);
 			name = ScriptWidgetMac;
 			packageProductDependencies = (
+				A206000200000000000000B0 /* SwiftOpenAI */,
 				F29118242791D38E00B860B0 /* SwiftyJSON */,
 				F29119982794490100B860B0 /* ZipArchive */,
 				F2B99C4227B8BE5E009584A3 /* SDWebImageSwiftUI */,
@@ -850,6 +908,7 @@
 			);
 			mainGroup = F29117D1279101DE00B860B0;
 			packageReferences = (
+				A206000100000000000000B0 /* XCRemoteSwiftPackageReference "SwiftOpenAI" */,
 				F29118232791D38E00B860B0 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				F29119972794490100B860B0 /* XCRemoteSwiftPackageReference "ZipArchive" */,
 				F2B99C4127B8BE5E009584A3 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
@@ -905,6 +964,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A202000100000000000000B0 /* AISettings.swift in Sources */,
+				A202000200000000000000B0 /* AIReferenceSnapshot.swift in Sources */,
+				A202000300000000000000B0 /* PromptBuilder.swift in Sources */,
+				A202000400000000000000B0 /* AIClient.swift in Sources */,
+				A202000500000000000000B0 /* AgentRuntimeBridge.swift in Sources */,
+				A202000600000000000000B0 /* AgentLoop.swift in Sources */,
+				A202000700000000000000B0 /* AIGenerateSession.swift in Sources */,
+				A202000800000000000000B0 /* AIGenerateProgressView.swift in Sources */,
+				A204000100000000000000B0 /* SettingAIView.swift in Sources */,
+				A204000200000000000000B0 /* AIGenerateWindowView.swift in Sources */,
 				D1995CFE29536BC700D1BD94 /* ScriptManager.swift in Sources */,
 				D1995CD029536BB800D1BD94 /* ScriptWidgetElementTagStack.swift in Sources */,
 				D1995CA829536BB800D1BD94 /* ScriptWidgetElementView.swift in Sources */,
@@ -1403,6 +1472,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		A206000100000000000000B0 /* XCRemoteSwiftPackageReference "SwiftOpenAI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jamesrochabrun/SwiftOpenAI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.4.9;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1435,6 +1512,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F29119972794490100B860B0 /* XCRemoteSwiftPackageReference "ZipArchive" */;
 			productName = ZipArchive;
+		};
+		A206000200000000000000B0 /* SwiftOpenAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A206000100000000000000B0 /* XCRemoteSwiftPackageReference "SwiftOpenAI" */;
+			productName = SwiftOpenAI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -68,7 +68,10 @@ actor AIClient {
         if baseURLString == AISettings.defaultBaseURL {
             service = OpenAIServiceFactory.service(apiKey: trimmedKey)
         } else {
-            service = OpenAIServiceFactory.service(apiKey: trimmedKey, baseURL: baseURLString)
+            service = OpenAIServiceFactory.service(
+                apiKey: trimmedKey,
+                overrideBaseURL: baseURLString
+            )
         }
 
         let chatMessages: [ChatCompletionParameters.Message] = messages.map { msg in
@@ -92,7 +95,7 @@ actor AIClient {
 
         do {
             let response = try await service.startChat(parameters: parameters)
-            guard let content = response.choices.first?.message.content, !content.isEmpty else {
+            guard let content = response.choices?.first?.message?.content, !content.isEmpty else {
                 throw AIClientError.emptyResponse
             }
             let usage = AITokenUsage(
