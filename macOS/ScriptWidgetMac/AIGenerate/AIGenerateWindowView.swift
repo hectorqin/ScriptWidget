@@ -11,6 +11,8 @@ import SwiftUI
 import WidgetKit
 
 struct AIGenerateWindowView: View {
+    static let openRequestNotification = Notification.Name("AIGenerateWindowViewOpenRequest")
+
     @Environment(\.dismiss) private var dismiss
 
     @StateObject private var session = AIGenerateSession()
@@ -31,6 +33,10 @@ struct AIGenerateWindowView: View {
         default: return false
         }
     }
+    private var isExhausted: Bool {
+        if case .exhausted = session.phase { return true }
+        return false
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -47,8 +53,14 @@ struct AIGenerateWindowView: View {
         }
         .frame(idealWidth: 860, minHeight: 520, idealHeight: 620)
         .frame(minWidth: 720)
-        .onAppear { ensurePreviewPackage() }
-        .onChange(of: jsx) { _ in refreshPreviewPackage() }
+        .onAppear {
+            ensurePreviewPackage()
+            prefillSaveNameIfNeeded()
+        }
+        .onChange(of: jsx) { _ in
+            refreshPreviewPackage()
+            prefillSaveNameIfNeeded()
+        }
         .sheet(isPresented: $showingCode) { codeSheet }
         .sheet(isPresented: $showingLogs) { logsSheet }
         .alert("Save Failed", isPresented: saveErrorBinding) {
@@ -147,6 +159,15 @@ struct AIGenerateWindowView: View {
                 Toggle("Debug", isOn: $isDebugMode)
                     .toggleStyle(.switch)
                     .controlSize(.small)
+            }
+
+            if isExhausted {
+                HStack(spacing: 6) {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                    Text("Did not fully converge — showing the last attempt.")
+                        .font(.caption)
+                }
+                .foregroundStyle(.orange)
             }
 
             ZStack {
@@ -321,6 +342,17 @@ struct AIGenerateWindowView: View {
         guard let pkg = previewPackage else { return }
         _ = pkg.writeMainFile(content: jsx)
     }
+
+    private func prefillSaveNameIfNeeded() {
+        guard saveName.trimmingCharacters(in: .whitespaces).isEmpty else { return }
+        saveName = "AI " + AIGenerateWindowView.defaultNameFormatter.string(from: Date())
+    }
+
+    private static let defaultNameFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "yyyy-MM-dd HHmm"
+        return f
+    }()
 
     private func performSave() {
         let trimmed = saveName.trimmingCharacters(in: .whitespacesAndNewlines)

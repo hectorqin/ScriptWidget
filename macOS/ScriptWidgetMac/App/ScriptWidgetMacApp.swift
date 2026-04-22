@@ -20,6 +20,10 @@ struct ScriptWidgetMacApp: App {
         }
         .commands {
             CommandGroup(after: .newItem) {
+                Button("Generate Widget with AI...") {
+                    NotificationCenter.default.post(name: AIGenerateWindowView.openRequestNotification, object: nil)
+                }.keyboardShortcut("n", modifiers: [.command, .shift])
+
                 Button("Save") {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                         NotificationCenter.default.post(name: EditorService.saveNotification, object: nil, userInfo: nil)

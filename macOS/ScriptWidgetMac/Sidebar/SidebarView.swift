@@ -44,6 +44,13 @@ struct SidebarView: View {
             .sheet(isPresented: $aiGenerateShowingSheet) {
                 AIGenerateWindowView()
             }
+            .onReceive(NotificationCenter.default.publisher(for: AIGenerateWindowView.openRequestNotification)) { _ in
+                if AISettingsStore.shared.load().isConfigured {
+                    aiGenerateShowingSheet = true
+                } else {
+                    aiConfigAlertShown = true
+                }
+            }
             .alert("Configure AI First", isPresented: $aiConfigAlertShown) {
                 Button("OK", role: .cancel) { }
             } message: {
