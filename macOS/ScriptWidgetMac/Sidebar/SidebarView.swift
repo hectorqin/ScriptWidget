@@ -66,22 +66,23 @@ struct SidebarView: View {
                 }
                 ToolbarItem(placement: .automatic) {
                     Button {
-                        self.createShowingSheet.toggle()
-                    } label: {
-                        Image(systemName: "plus.circle")
-                    }
-                }
-                ToolbarItem(placement: .automatic) {
-                    Button {
                         if AISettingsStore.shared.load().isConfigured {
                             self.aiGenerateShowingSheet = true
                         } else {
                             self.aiConfigAlertShown = true
                         }
                     } label: {
-                        Image(systemName: "sparkles")
+                        Label("Generate with AI", systemImage: "wand.and.stars")
                     }
-                    .help("Generate with AI")
+                    .help("Generate with AI (⌘⇧N)")
+                }
+                ToolbarItem(placement: .automatic) {
+                    Button {
+                        self.createShowingSheet.toggle()
+                    } label: {
+                        Image(systemName: "plus.circle")
+                    }
+                    .help("New widget")
                 }
             }
     }
