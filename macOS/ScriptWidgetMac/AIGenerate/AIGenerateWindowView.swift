@@ -87,6 +87,8 @@ struct AIGenerateWindowView: View {
                     .frame(minHeight: 140)
                     .border(Color.secondary.opacity(0.3))
 
+                examplesSection
+
                 HStack {
                     Text("Size")
                     Picker("", selection: $session.size) {
@@ -167,6 +169,32 @@ struct AIGenerateWindowView: View {
             .disabled(jsx.isEmpty)
         }
         .padding(12)
+    }
+
+    private var examplesSection: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text("Try an example")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 6) {
+                    ForEach(AIExamplePrompts.all) { example in
+                        Button {
+                            prompt = example.prompt
+                            session.size = example.size
+                        } label: {
+                            HStack(spacing: 4) {
+                                Image(systemName: example.symbol)
+                                Text(example.title)
+                            }
+                            .font(.caption)
+                        }
+                        .buttonStyle(.bordered)
+                        .controlSize(.small)
+                    }
+                }
+            }
+        }
     }
 
     @ViewBuilder

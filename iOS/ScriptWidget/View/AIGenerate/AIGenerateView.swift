@@ -41,6 +41,8 @@ struct AIGenerateView: View {
                     }
                 }
 
+                examplesSection
+
                 Picker("Size", selection: $session.size) {
                     ForEach(AIWidgetSize.allCases) { size in
                         Text(size.displayName).tag(size)
@@ -107,6 +109,37 @@ struct AIGenerateView: View {
         switch session.phase {
         case .idle: return false
         default: return true
+        }
+    }
+
+    private var examplesSection: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text("Try an example")
+                .font(.subheadline.weight(.medium))
+                .foregroundStyle(.secondary)
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 8) {
+                    ForEach(AIExamplePrompts.all) { example in
+                        Button {
+                            prompt = example.prompt
+                            session.size = example.size
+                        } label: {
+                            HStack(spacing: 6) {
+                                Image(systemName: example.symbol)
+                                Text(example.title)
+                            }
+                            .font(.caption)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 6)
+                            .background(Color.accentColor.opacity(0.12))
+                            .foregroundColor(.accentColor)
+                            .clipShape(Capsule())
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .padding(.vertical, 2)
+            }
         }
     }
 }

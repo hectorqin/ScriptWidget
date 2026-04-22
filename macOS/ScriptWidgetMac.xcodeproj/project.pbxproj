@@ -194,6 +194,7 @@
 		A204000100000000000000B0 /* SettingAIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A203000100000000000000B0 /* SettingAIView.swift */; };
 		A204000200000000000000B0 /* AIGenerateWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A203000200000000000000B0 /* AIGenerateWindowView.swift */; };
 		A206000300000000000000B0 /* SwiftOpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = A206000200000000000000B0 /* SwiftOpenAI */; };
+		A202000900000000000000B0 /* AIExamplePrompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201000900000000000000B0 /* AIExamplePrompts.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -342,6 +343,7 @@
 		A201000800000000000000B0 /* AIGenerateProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIGenerateProgressView.swift; sourceTree = "<group>"; };
 		A203000100000000000000B0 /* SettingAIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAIView.swift; sourceTree = "<group>"; };
 		A203000200000000000000B0 /* AIGenerateWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIGenerateWindowView.swift; sourceTree = "<group>"; };
+		A201000900000000000000B0 /* AIExamplePrompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIExamplePrompts.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -809,6 +811,7 @@
 				A201000600000000000000B0 /* AgentLoop.swift */,
 				A201000700000000000000B0 /* AIGenerateSession.swift */,
 				A201000800000000000000B0 /* AIGenerateProgressView.swift */,
+				A201000900000000000000B0 /* AIExamplePrompts.swift */,
 			);
 			name = AI;
 			path = ../Shared/ScriptWidgetRuntime/AI;
@@ -964,6 +967,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A202000900000000000000B0 /* AIExamplePrompts.swift in Sources */,
 				A202000100000000000000B0 /* AISettings.swift in Sources */,
 				A202000200000000000000B0 /* AIReferenceSnapshot.swift in Sources */,
 				A202000300000000000000B0 /* PromptBuilder.swift in Sources */,
