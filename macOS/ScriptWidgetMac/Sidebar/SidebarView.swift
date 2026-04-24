@@ -106,6 +106,14 @@ struct SidebarView: View {
                             Button("Update") {
                                 item.package.updateFiles()
                             }
+                            Button("Remix (Duplicate)") {
+                                let result = sharedScriptManager.duplicateScript(sourcePackageName: item.name)
+                                if result.0 {
+                                    NotificationCenter.default.post(name: SharedAppStore.scriptCreateNotification, object: nil)
+                                } else {
+                                    MacKitUtil.alertWarn(title: "Remix failed", message: result.1)
+                                }
+                            }
                             Button("Rename") {
                                 self.renameCurrentName = item.name
                                 self.renameInputName = item.name

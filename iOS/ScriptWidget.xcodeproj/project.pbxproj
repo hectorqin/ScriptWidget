@@ -156,6 +156,9 @@
 		F29118F32793034D00B860B0 /* ScriptModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29118EC2793034D00B860B0 /* ScriptModel.swift */; };
 		F29118F42793034D00B860B0 /* ScriptModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29118EC2793034D00B860B0 /* ScriptModel.swift */; };
 		F29118F62793034D00B860B0 /* ScriptModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29118EC2793034D00B860B0 /* ScriptModel.swift */; };
+		D1A0000000E0000000000002 /* ScriptMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A0000000E0000000000001 /* ScriptMetadata.swift */; };
+		D1A0000000E0000000000003 /* ScriptMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A0000000E0000000000001 /* ScriptMetadata.swift */; };
+		D1A0000000E0000000000004 /* ScriptMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A0000000E0000000000001 /* ScriptMetadata.swift */; };
 		F29118FB2793034D00B860B0 /* ScriptManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29118EE2793034D00B860B0 /* ScriptManager.swift */; };
 		F29118FC2793034D00B860B0 /* ScriptManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29118EE2793034D00B860B0 /* ScriptManager.swift */; };
 		F29118FE2793034D00B860B0 /* ScriptManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29118EE2793034D00B860B0 /* ScriptManager.swift */; };
@@ -488,6 +491,7 @@
 		F28E474225EA92750080A810 /* SettingsICloudView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsICloudView.swift; sourceTree = "<group>"; };
 		F28EC0A925EE98150047F1ED /* SettingsGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsGroupView.swift; sourceTree = "<group>"; };
 		F29118EC2793034D00B860B0 /* ScriptModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptModel.swift; sourceTree = "<group>"; };
+		D1A0000000E0000000000001 /* ScriptMetadata.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptMetadata.swift; sourceTree = "<group>"; };
 		F29118EE2793034D00B860B0 /* ScriptManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptManager.swift; sourceTree = "<group>"; };
 		F29119012793035E00B860B0 /* MineGaugeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineGaugeView.swift; sourceTree = "<group>"; };
 		F29119022793035E00B860B0 /* ScriptWidgetElementColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptWidgetElementColor.swift; sourceTree = "<group>"; };
@@ -996,6 +1000,7 @@
 			children = (
 				F29119922793223300B860B0 /* ScriptWidgetPackage.swift */,
 				F29118EC2793034D00B860B0 /* ScriptModel.swift */,
+				D1A0000000E0000000000001 /* ScriptMetadata.swift */,
 				F29118EE2793034D00B860B0 /* ScriptManager.swift */,
 			);
 			name = Common;
@@ -1601,6 +1606,7 @@
 				F25ED68F27FDF9DD000089D0 /* ScriptWidgetRunningState.swift in Sources */,
 				F23A40BB262492FF0035CBA7 /* DeepLinkManager.swift in Sources */,
 				F29118F32793034D00B860B0 /* ScriptModel.swift in Sources */,
+				D1A0000000E0000000000002 /* ScriptMetadata.swift in Sources */,
 				D1403DEB2552FEB40076F87C /* TOCropViewController.m in Sources */,
 				F2C5C5E427AF5B5400797C5B /* AppIconsView.swift in Sources */,
 				F277CBA427CB5A2C003AB97D /* ScriptWidgetAttributeOpacityModifier.swift in Sources */,
@@ -1789,6 +1795,7 @@
 				F08113B42AD0831C00605DE1 /* ScriptWidgetTimelineProvider.swift in Sources */,
 				F277CBA527CB5A2C003AB97D /* ScriptWidgetAttributeOpacityModifier.swift in Sources */,
 				F29118F42793034D00B860B0 /* ScriptModel.swift in Sources */,
+				D1A0000000E0000000000003 /* ScriptMetadata.swift in Sources */,
 				F29119812793035E00B860B0 /* ScriptWidgetRuntimeConsole.swift in Sources */,
 				F29119732793035E00B860B0 /* ScriptWidgetElementTagText.swift in Sources */,
 				F29119772793035E00B860B0 /* ScriptWidgetElementTagGauge.swift in Sources */,
@@ -1804,6 +1811,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F29118F62793034D00B860B0 /* ScriptModel.swift in Sources */,
+				D1A0000000E0000000000004 /* ScriptMetadata.swift in Sources */,
 				F29118FE2793034D00B860B0 /* ScriptManager.swift in Sources */,
 				F2C6AC7426004B0F009CECE9 /* ShareViewController.swift in Sources */,
 				F29119962793223300B860B0 /* ScriptWidgetPackage.swift in Sources */,

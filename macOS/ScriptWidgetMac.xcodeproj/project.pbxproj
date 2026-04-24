@@ -130,6 +130,8 @@
 		D1995CF929536BC700D1BD94 /* ScriptWidgetPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1995CF529536BC700D1BD94 /* ScriptWidgetPackage.swift */; };
 		D1995CFB29536BC700D1BD94 /* ScriptModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1995CF629536BC700D1BD94 /* ScriptModel.swift */; };
 		D1995CFC29536BC700D1BD94 /* ScriptModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1995CF629536BC700D1BD94 /* ScriptModel.swift */; };
+		D1A0000000E0000000001001 /* ScriptMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A0000000E0000000001000 /* ScriptMetadata.swift */; };
+		D1A0000000E0000000001002 /* ScriptMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A0000000E0000000001000 /* ScriptMetadata.swift */; };
 		D1995CFE29536BC700D1BD94 /* ScriptManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1995CF729536BC700D1BD94 /* ScriptManager.swift */; };
 		D1995CFF29536BC700D1BD94 /* ScriptManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1995CF729536BC700D1BD94 /* ScriptManager.swift */; };
 		D1995D0629536BF000D1BD94 /* Script.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D1995D0529536BF000D1BD94 /* Script.bundle */; };
@@ -289,6 +291,7 @@
 		D1995C9229536BB800D1BD94 /* Apple ][.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Apple ][.ttf"; sourceTree = "<group>"; };
 		D1995CF529536BC700D1BD94 /* ScriptWidgetPackage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptWidgetPackage.swift; sourceTree = "<group>"; };
 		D1995CF629536BC700D1BD94 /* ScriptModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptModel.swift; sourceTree = "<group>"; };
+		D1A0000000E0000000001000 /* ScriptMetadata.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptMetadata.swift; sourceTree = "<group>"; };
 		D1995CF729536BC700D1BD94 /* ScriptManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptManager.swift; sourceTree = "<group>"; };
 		D1995D0529536BF000D1BD94 /* Script.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Script.bundle; sourceTree = "<group>"; };
 		F05227BD2AD1D6DE0014BE09 /* ScriptWidgetElementTagToggle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptWidgetElementTagToggle.swift; sourceTree = "<group>"; };
@@ -603,6 +606,7 @@
 			children = (
 				D1995CF529536BC700D1BD94 /* ScriptWidgetPackage.swift */,
 				D1995CF629536BC700D1BD94 /* ScriptModel.swift */,
+				D1A0000000E0000000001000 /* ScriptMetadata.swift */,
 				D1995CF729536BC700D1BD94 /* ScriptManager.swift */,
 			);
 			name = Common;
@@ -1036,6 +1040,7 @@
 				D1995CBC29536BB800D1BD94 /* ScriptWidgetAttributeShadowModifier.swift in Sources */,
 				D1995CA629536BB800D1BD94 /* ScriptWidgetAppState.swift in Sources */,
 				D1995CFB29536BC700D1BD94 /* ScriptModel.swift in Sources */,
+				D1A0000000E0000000001001 /* ScriptMetadata.swift in Sources */,
 				F29118E82792CCDE00B860B0 /* PreviewWidgetSize.swift in Sources */,
 				F29117E8279101DF00B860B0 /* ScriptWidgetMacApp.swift in Sources */,
 				D1995CDA29536BB800D1BD94 /* ScriptWidgetElementTagText.swift in Sources */,
@@ -1078,6 +1083,7 @@
 				D1995CE129536BB800D1BD94 /* ScriptWidgetElementTagGauge.swift in Sources */,
 				D1995CAB29536BB800D1BD94 /* ScriptWidgetRuntimeElement.swift in Sources */,
 				D1995CFC29536BC700D1BD94 /* ScriptModel.swift in Sources */,
+				D1A0000000E0000000001002 /* ScriptMetadata.swift in Sources */,
 				D1995CB129536BB800D1BD94 /* ScriptWidgetAttributeClippedModifier.swift in Sources */,
 				D1995C9D29536BB800D1BD94 /* MineRingView.swift in Sources */,
 				D1995CF929536BC700D1BD94 /* ScriptWidgetPackage.swift in Sources */,
