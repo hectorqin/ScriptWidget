@@ -13,11 +13,6 @@
 //    UserDefaults.
 //  - Active profile id under `ai.activeProfileID`.
 //  - Agent-loop globals (maxIterations / temperature) are app-wide.
-//  - Legacy single-profile UserDefaults keys (ai.apiKey, ai.baseURL,
-//    ai.model) are migrated into a "Default" profile on first load.
-//  - Profiles persisted before the Keychain migration carry their key
-//    in JSON; on first load with this build the keys are moved into
-//    Keychain and the JSON re-written without them.
 //
 //  Auth methods per profile:
 //    .apiKey  → settings.apiKey holds the literal key.
@@ -89,9 +84,6 @@ struct AIProfile: Identifiable, Equatable {
 extension AIProfile: Codable {
     private enum CodingKeys: String, CodingKey {
         case id, name, baseURL, model, authMethod
-        // Legacy: older builds stored apiKey in JSON. Read it back during
-        // migration; never write it.
-        case apiKey
     }
 
     init(from decoder: Decoder) throws {
@@ -101,7 +93,7 @@ extension AIProfile: Codable {
         baseURL = try c.decode(String.self, forKey: .baseURL)
         model = try c.decode(String.self, forKey: .model)
         authMethod = try c.decode(AIAuthMethod.self, forKey: .authMethod)
-        apiKey = try c.decodeIfPresent(String.self, forKey: .apiKey) ?? ""
+        apiKey = ""  // hydrated from Keychain by AISettingsStore
     }
 
     func encode(to encoder: Encoder) throws {
@@ -116,17 +108,10 @@ extension AIProfile: Codable {
 }
 
 enum AISettingsKey {
-    // v2 profile storage
-    static let profiles                    = "ai.profiles.v2"
-    static let activeProfileID             = "ai.activeProfileID"
-    static let apiKeyKeychainMigratedFlag  = "ai.profiles.apiKeyKeychainMigrated.v1"
-    // agent-loop globals
-    static let maxIterations               = "ai.maxIterations"
-    static let temperature                 = "ai.temperature"
-    // legacy keys (read-only; only used during migration)
-    static let legacyAPIKey  = "ai.apiKey"
-    static let legacyBaseURL = "ai.baseURL"
-    static let legacyModel   = "ai.model"
+    static let profiles         = "ai.profiles.v2"
+    static let activeProfileID  = "ai.activeProfileID"
+    static let maxIterations    = "ai.maxIterations"
+    static let temperature      = "ai.temperature"
 }
 
 /// Snapshot consumed by AIClient / AgentLoop. Bakes the active profile
@@ -169,8 +154,6 @@ final class AISettingsStore {
 
     private init() {
         self.defaults = UserDefaults(suiteName: "group.everettjf.scriptwidget") ?? .standard
-        migrateLegacyIfNeeded()
-        migrateAPIKeysToKeychainIfNeeded()
     }
 
     // MARK: - Profiles
@@ -181,7 +164,7 @@ final class AISettingsStore {
            !decoded.isEmpty {
             return decoded.map { hydrateAPIKey($0) }
         }
-        // Should be unreachable after migrate(), but be defensive.
+        // First launch: seed with one default profile.
         let fresh = [AIProfile.makeDefault()]
         saveProfiles(fresh, activeID: fresh[0].id, notify: false)
         return fresh
@@ -296,52 +279,5 @@ final class AISettingsStore {
         } else {
             keychain.set(trimmed, for: apiKeyAccount(for: profile.id))
         }
-    }
-
-    // MARK: - Migration
-
-    private func migrateLegacyIfNeeded() {
-        // Already migrated? bail.
-        if defaults.data(forKey: AISettingsKey.profiles) != nil {
-            return
-        }
-        let legacyKey = defaults.string(forKey: AISettingsKey.legacyAPIKey) ?? ""
-        let legacyBase = defaults.string(forKey: AISettingsKey.legacyBaseURL) ?? AIProfile.defaultBaseURL
-        let legacyModel = defaults.string(forKey: AISettingsKey.legacyModel) ?? AIProfile.defaultModel
-
-        let profile = AIProfile(
-            id: UUID().uuidString,
-            name: "Default",
-            baseURL: legacyBase.isEmpty ? AIProfile.defaultBaseURL : legacyBase,
-            model: legacyModel.isEmpty ? AIProfile.defaultModel : legacyModel,
-            apiKey: legacyKey,
-            authMethod: .apiKey
-        )
-
-        // Route through saveProfiles so the Keychain receives the key and
-        // the JSON ends up clean. Mark the keychain-migration flag too,
-        // because the data we just wrote already conforms to the new
-        // shape (no apiKey embedded).
-        saveProfiles([profile], activeID: profile.id, notify: false)
-        defaults.set(true, forKey: AISettingsKey.apiKeyKeychainMigratedFlag)
-    }
-
-    private func migrateAPIKeysToKeychainIfNeeded() {
-        if defaults.bool(forKey: AISettingsKey.apiKeyKeychainMigratedFlag) {
-            return
-        }
-        guard let data = defaults.data(forKey: AISettingsKey.profiles),
-              let decoded = try? JSONDecoder().decode([AIProfile].self, from: data),
-              !decoded.isEmpty else {
-            // Nothing to migrate; mark done so we don't re-check on every
-            // launch.
-            defaults.set(true, forKey: AISettingsKey.apiKeyKeychainMigratedFlag)
-            return
-        }
-        // `decoded` profiles carry the legacy apiKey in-memory because the
-        // decoder reads it when present. Persist them: saveProfiles writes
-        // each apiKey to Keychain and re-encodes the JSON without it.
-        saveProfiles(decoded, notify: false)
-        defaults.set(true, forKey: AISettingsKey.apiKeyKeychainMigratedFlag)
     }
 }
