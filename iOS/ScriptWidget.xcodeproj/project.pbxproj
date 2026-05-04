@@ -324,6 +324,9 @@
 		A104000300000000000000B0 /* AIReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A103000300000000000000B0 /* AIReviewView.swift */; };
 		A106000300000000000000B0 /* SwiftOpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = A106000200000000000000B0 /* SwiftOpenAI */; };
 		A102000900000000000000B0 /* AIExamplePrompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A101000900000000000000B0 /* AIExamplePrompts.swift */; };
+		A102000A00000000000000B0 /* AIKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A101000A00000000000000B0 /* AIKeychain.swift */; };
+		A102000B00000000000000B0 /* AILocalOAuthServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A101000B00000000000000B0 /* AILocalOAuthServer.swift */; };
+		A102000C00000000000000B0 /* AIOpenAIOAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = A101000C00000000000000B0 /* AIOpenAIOAuth.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -613,6 +616,9 @@
 		A103000200000000000000B0 /* AIGenerateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIGenerateView.swift; sourceTree = "<group>"; };
 		A103000300000000000000B0 /* AIReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIReviewView.swift; sourceTree = "<group>"; };
 		A101000900000000000000B0 /* AIExamplePrompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIExamplePrompts.swift; sourceTree = "<group>"; };
+		A101000A00000000000000B0 /* AIKeychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIKeychain.swift; sourceTree = "<group>"; };
+		A101000B00000000000000B0 /* AILocalOAuthServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AILocalOAuthServer.swift; sourceTree = "<group>"; };
+		A101000C00000000000000B0 /* AIOpenAIOAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIOpenAIOAuth.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1340,6 +1346,9 @@
 				A101000700000000000000B0 /* AIGenerateSession.swift */,
 				A101000800000000000000B0 /* AIGenerateProgressView.swift */,
 				A101000900000000000000B0 /* AIExamplePrompts.swift */,
+				A101000A00000000000000B0 /* AIKeychain.swift */,
+				A101000B00000000000000B0 /* AILocalOAuthServer.swift */,
+				A101000C00000000000000B0 /* AIOpenAIOAuth.swift */,
 			);
 			name = AI;
 			path = ../Shared/ScriptWidgetRuntime/AI;
@@ -1585,6 +1594,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A102000900000000000000B0 /* AIExamplePrompts.swift in Sources */,
+				A102000A00000000000000B0 /* AIKeychain.swift in Sources */,
+				A102000B00000000000000B0 /* AILocalOAuthServer.swift in Sources */,
+				A102000C00000000000000B0 /* AIOpenAIOAuth.swift in Sources */,
 				A102000100000000000000B0 /* AISettings.swift in Sources */,
 				A102000200000000000000B0 /* AIReferenceSnapshot.swift in Sources */,
 				A102000300000000000000B0 /* PromptBuilder.swift in Sources */,

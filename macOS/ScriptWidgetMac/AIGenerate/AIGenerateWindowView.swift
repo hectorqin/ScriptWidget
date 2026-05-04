@@ -25,6 +25,8 @@ struct AIGenerateWindowView: View {
     @State private var showingLogs: Bool = false
     @State private var isDebugMode: Bool = false
     @State private var previewPackage: ScriptWidgetPackage?
+    @State private var profiles: [AIProfile] = []
+    @State private var activeProfileID: String = ""
 
     private var jsx: String { session.lastJSX ?? "" }
     private var hasResult: Bool {
@@ -56,6 +58,10 @@ struct AIGenerateWindowView: View {
         .onAppear {
             ensurePreviewPackage()
             prefillSaveNameIfNeeded()
+            loadProfiles()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: AISettingsStore.changedNotification)) { _ in
+            loadProfiles()
         }
         .onChange(of: jsx) { _ in
             refreshPreviewPackage()
@@ -100,6 +106,21 @@ struct AIGenerateWindowView: View {
                     .border(Color.secondary.opacity(0.3))
 
                 examplesSection
+
+                if profiles.count > 1 {
+                    HStack {
+                        Text("Profile")
+                        Picker("", selection: $activeProfileID) {
+                            ForEach(profiles) { profile in
+                                Text(profile.name.isEmpty ? "Unnamed" : profile.name).tag(profile.id)
+                            }
+                        }
+                        .labelsHidden()
+                        .onChange(of: activeProfileID) { newValue in
+                            AISettingsStore.shared.setActiveProfile(id: newValue)
+                        }
+                    }
+                }
 
                 HStack {
                     Text("Size")
@@ -329,6 +350,11 @@ struct AIGenerateWindowView: View {
             get: { saveError != nil },
             set: { if !$0 { saveError = nil } }
         )
+    }
+
+    private func loadProfiles() {
+        profiles = AISettingsStore.shared.loadProfiles()
+        activeProfileID = AISettingsStore.shared.loadActiveProfileID()
     }
 
     private func ensurePreviewPackage() {

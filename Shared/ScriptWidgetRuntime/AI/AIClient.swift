@@ -64,12 +64,26 @@ actor AIClient {
             throw AIClientError.invalidBaseURL(baseURLString)
         }
 
+        // For OAuth profiles, refresh the access token if it's near expiry
+        // and persist the refreshed credential before using it. Plain API
+        // key profiles pass through unchanged.
+        let resolvedKey: String
+        if settings.authMethod == .oauth {
+            do {
+                resolvedKey = try await AIOpenAIOAuthVault.resolvedAccessToken(from: trimmedKey)
+            } catch {
+                throw AIClientError.upstream("OAuth refresh failed: \(error.localizedDescription)")
+            }
+        } else {
+            resolvedKey = trimmedKey
+        }
+
         let service: OpenAIService
         if baseURLString == AISettings.defaultBaseURL {
-            service = OpenAIServiceFactory.service(apiKey: trimmedKey)
+            service = OpenAIServiceFactory.service(apiKey: resolvedKey)
         } else {
             service = OpenAIServiceFactory.service(
-                apiKey: trimmedKey,
+                apiKey: resolvedKey,
                 overrideBaseURL: baseURLString
             )
         }

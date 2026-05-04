@@ -14,6 +14,8 @@ struct AIGenerateView: View {
 
     @State private var prompt: String = ""
     @State private var showReview = false
+    @State private var profiles: [AIProfile] = []
+    @State private var activeProfileID: String = ""
 
     private let placeholderPrompt = "e.g. Show the current weather for my location, with a minimalist dark background."
 
@@ -42,6 +44,24 @@ struct AIGenerateView: View {
                 }
 
                 examplesSection
+
+                if profiles.count > 1 {
+                    HStack {
+                        Text("Profile")
+                            .font(.subheadline)
+                        Spacer()
+                        Picker("", selection: $activeProfileID) {
+                            ForEach(profiles) { profile in
+                                Text(profile.name.isEmpty ? "Unnamed" : profile.name).tag(profile.id)
+                            }
+                        }
+                        .pickerStyle(.menu)
+                        .labelsHidden()
+                        .onChange(of: activeProfileID) { newValue in
+                            AISettingsStore.shared.setActiveProfile(id: newValue)
+                        }
+                    }
+                }
 
                 Picker("Size", selection: $session.size) {
                     ForEach(AIWidgetSize.allCases) { size in
@@ -72,6 +92,10 @@ struct AIGenerateView: View {
         }
         .navigationTitle("Generate")
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear(perform: loadProfiles)
+        .onReceive(NotificationCenter.default.publisher(for: AISettingsStore.changedNotification)) { _ in
+            loadProfiles()
+        }
         .onChange(of: session.phase) { newPhase in
             if case .done = newPhase {
                 showReview = true
@@ -103,6 +127,11 @@ struct AIGenerateView: View {
             }
             Spacer()
         }
+    }
+
+    private func loadProfiles() {
+        profiles = AISettingsStore.shared.loadProfiles()
+        activeProfileID = AISettingsStore.shared.loadActiveProfileID()
     }
 
     private var hasOutcome: Bool {
