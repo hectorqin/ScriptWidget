@@ -63,7 +63,7 @@ struct AIGenerateWindowView: View {
         .onReceive(NotificationCenter.default.publisher(for: AISettingsStore.changedNotification)) { _ in
             loadProfiles()
         }
-        .onChange(of: jsx) { _ in
+        .onChange(of: jsx) {
             refreshPreviewPackage()
             prefillSaveNameIfNeeded()
         }
@@ -116,7 +116,7 @@ struct AIGenerateWindowView: View {
                             }
                         }
                         .labelsHidden()
-                        .onChange(of: activeProfileID) { newValue in
+                        .onChange(of: activeProfileID) { _, newValue in
                             AISettingsStore.shared.setActiveProfile(id: newValue)
                         }
                     }

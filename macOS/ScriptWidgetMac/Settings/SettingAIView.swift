@@ -160,14 +160,14 @@ struct SettingAIView: View {
                     Stepper(value: $maxIterations, in: 5...100, step: 5) {
                         Text("\(maxIterations)").monospacedDigit()
                     }
-                    .onChange(of: maxIterations) { _ in saveAgentLoop() }
+                    .onChange(of: maxIterations) { saveAgentLoop() }
                 }
 
                 HStack {
                     Text("Temperature")
                     Slider(value: $temperature, in: 0.0...1.5, step: 0.05)
                         .frame(maxWidth: 200)
-                        .onChange(of: temperature) { _ in saveAgentLoop() }
+                        .onChange(of: temperature) { saveAgentLoop() }
                     Text(String(format: "%.2f", temperature))
                         .monospacedDigit()
                         .frame(width: 50, alignment: .trailing)
@@ -255,7 +255,7 @@ private struct AIProfileEditorPane: View {
             Section("Name") {
                 TextField("Profile name", text: $name)
                     .textFieldStyle(.roundedBorder)
-                    .onChange(of: name) { _ in persist() }
+                    .onChange(of: name) { persist() }
             }
 
             Section("Provider") {
@@ -275,13 +275,13 @@ private struct AIProfileEditorPane: View {
                 }
                 TextField("https://api.openai.com", text: $baseURL)
                     .textFieldStyle(.roundedBorder)
-                    .onChange(of: baseURL) { _ in persist() }
+                    .onChange(of: baseURL) { persist() }
             }
 
             Section("Model") {
                 TextField("gpt-4o-mini", text: $model)
                     .textFieldStyle(.roundedBorder)
-                    .onChange(of: model) { _ in persist() }
+                    .onChange(of: model) { persist() }
                 HStack(spacing: 6) {
                     ForEach(modelSuggestions, id: \.self) { preset in
                         Button(preset) {
@@ -301,7 +301,7 @@ private struct AIProfileEditorPane: View {
                     Text("OpenAI OAuth").tag(AIAuthMethod.oauth)
                 }
                 .pickerStyle(.segmented)
-                .onChange(of: authMethod) { _ in persist() }
+                .onChange(of: authMethod) { persist() }
 
                 if authMethod == .apiKey {
                     HStack {
@@ -320,7 +320,7 @@ private struct AIProfileEditorPane: View {
                         }
                         .buttonStyle(.borderless)
                     }
-                    .onChange(of: apiKey) { _ in persist() }
+                    .onChange(of: apiKey) { persist() }
                     Text("API key is stored in the Keychain on this device.")
                         .font(.caption).foregroundColor(.secondary)
                 } else {

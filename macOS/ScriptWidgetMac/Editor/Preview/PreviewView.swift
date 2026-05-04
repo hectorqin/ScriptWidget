@@ -291,11 +291,11 @@ struct PreviewView: View {
                         Text("Preview Size")
                     }
                     .pickerStyle(SegmentedPickerStyle())
-                    .onChange(of: widgetSizeType, perform: { value in
+                    .onChange(of: widgetSizeType) { _, value in
                         print("preview size changed : \(value)")
-                        
+
                         self.data.changeWidgetSizeType(value)
-                    })
+                    }
                 }
                 .padding(.top, 5)
                 

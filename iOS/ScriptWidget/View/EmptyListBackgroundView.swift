@@ -143,13 +143,7 @@ struct EmptyListBackgroundView: View {
             }
             .buttonStyle(.plain)
 
-            Text("Or tap ")
-                .font(.caption)
-                .foregroundColor(.secondary)
-            + Text(Image(systemName: "plus.square"))
-                .font(.caption)
-                .foregroundColor(.secondary)
-            + Text(" in the top-right to create from scratch or with AI.")
+            Text("Or tap \(Image(systemName: "plus.square")) in the top-right to create from scratch or with AI.")
                 .font(.caption)
                 .foregroundColor(.secondary)
         }
