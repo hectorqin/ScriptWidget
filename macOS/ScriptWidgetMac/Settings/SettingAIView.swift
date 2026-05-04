@@ -321,8 +321,8 @@ private struct AIProfileEditorPane: View {
                         .buttonStyle(.borderless)
                     }
                     .onChange(of: apiKey) { _ in persist() }
-                    Text("API key is stored in plain-text UserDefaults.")
-                        .font(.caption).foregroundColor(.orange)
+                    Text("API key is stored in the Keychain on this device.")
+                        .font(.caption).foregroundColor(.secondary)
                 } else {
                     oauthSection
                     Text("OAuth uses the Codex CLI client and the OpenAI host (api.openai.com). Token lives in the Keychain and refreshes automatically.")

@@ -257,8 +257,8 @@ struct AIProfileEditorView: View {
                 Text("Authentication")
             } footer: {
                 if authMethod == .apiKey {
-                    Text("API key is stored in plain-text UserDefaults. OAuth credentials, when used, are stored in the Keychain instead.")
-                        .foregroundColor(.orange)
+                    Text("API key is stored in the Keychain on this device.")
+                        .foregroundColor(.secondary)
                 } else {
                     Text("OAuth uses the Codex CLI client and only works with the OpenAI host (api.openai.com). The token is stored in the Keychain and refreshed automatically.")
                         .foregroundColor(.secondary)
