@@ -3,9 +3,11 @@
 //  ScriptWidget
 //
 //  Adapts the synchronous ScriptWidgetRuntime.executeJSXSyncForWidget to
-//  an async interface, persists the generated JSX to a one-shot temp
-//  package (so $file / $import won't explode), and serializes executions
-//  (the runtime uses a global `sharedRunningState` for log capture).
+//  an async interface and persists the generated JSX to a one-shot temp
+//  package (so $file / $import won't explode). Each execution gets its
+//  own ScriptWidgetRuntime — running state hangs off that runtime's
+//  JSContext, so concurrent runs (e.g. agent loop in the background
+//  while the editor preview is also running) don't trample each other.
 //
 
 import Foundation
@@ -56,9 +58,11 @@ struct AgentRunResult {
 final class AgentRuntimeBridge {
     static let shared = AgentRuntimeBridge()
 
-    // Runs are serialized because ScriptWidgetRuntime stores running
-    // state in a global.
-    private let serialQueue = DispatchQueue(label: "scriptwidget.ai.runtime.serial")
+    private let runQueue = DispatchQueue(
+        label: "scriptwidget.ai.runtime",
+        qos: .userInitiated,
+        attributes: .concurrent
+    )
 
     private let sessionRoot: URL
 
@@ -85,7 +89,7 @@ final class AgentRuntimeBridge {
 
     func run(jsx: String, in package: ScriptWidgetPackage, size: AIWidgetSize) async -> AgentRunResult {
         return await withCheckedContinuation { continuation in
-            serialQueue.async {
+            runQueue.async {
                 // Persist the JSX so packages that read themselves or
                 // register support files still work.
                 let writeResult = package.writeMainFile(content: jsx)
@@ -98,18 +102,13 @@ final class AgentRuntimeBridge {
                     return
                 }
 
-                // Reset the global running state — the runtime will also
-                // do this in its init, but clearing here keeps log
-                // capture scoped to this single execution.
-                sharedRunningState = ScriptWidgetRunningState(package: package)
-
                 let runtime = ScriptWidgetRuntime(package: package, environments: [
                     "widget-size": size.rawValue,
                     "widget-param": "",
                 ])
 
                 let (element, err) = runtime.executeJSXSyncForWidget(jsx)
-                let logs = sharedRunningState?.logger.logs ?? []
+                let logs = runtime.runningState?.logger.logs ?? []
                 continuation.resume(returning: AgentRunResult(element: element, error: err, logs: logs))
             }
         }
