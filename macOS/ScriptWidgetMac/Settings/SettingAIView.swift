@@ -17,6 +17,8 @@ struct SettingAIView: View {
     @State private var maxIterations: Int = AISettings.defaultMaxIterations
     @State private var temperature: Double = AISettings.defaultTemperature
 
+    @StateObject private var benchmarkState = AIBenchmarkUIState()
+
     var body: some View {
         VStack(spacing: 0) {
             HSplitView {
@@ -27,9 +29,11 @@ struct SettingAIView: View {
             }
             Divider()
             agentLoopBar
+            Divider()
+            benchmarkBar
         }
         .padding(0)
-        .frame(minWidth: 720, minHeight: 540)
+        .frame(minWidth: 720, minHeight: 600)
         .onAppear(perform: reload)
         .onReceive(NotificationCenter.default.publisher(for: AISettingsStore.changedNotification)) { _ in
             reload()
@@ -146,6 +150,60 @@ struct SettingAIView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
+    }
+
+    // MARK: - benchmark bar
+
+    private var benchmarkBar: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text("Benchmark").font(.headline)
+                Spacer()
+                if benchmarkState.isRunning {
+                    Button("Stop") { benchmarkState.cancel() }
+                        .buttonStyle(.bordered)
+                        .controlSize(.small)
+                } else {
+                    Button {
+                        Task { await benchmarkState.run() }
+                    } label: {
+                        Label("Run Benchmark", systemImage: "play.fill")
+                    }
+                    .controlSize(.small)
+                    .disabled(!AISettingsStore.shared.loadActiveProfile().isConfigured)
+                }
+            }
+
+            switch benchmarkState.phase {
+            case .idle:
+                Text("Run the agent loop against the bundled template prompts (~3 attempts each, parallel) and write a markdown report. Use a baseline before you change prompts.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            case .running(let completed, let total, let currentCase):
+                let fraction = total > 0 ? Double(completed) / Double(total) : 0
+                ProgressView(value: fraction).controlSize(.small)
+                Text("\(completed) / \(total) — \(currentCase ?? "…")")
+                    .font(.caption.monospaced())
+                    .foregroundStyle(.secondary)
+            case .finished(let summary, let dir):
+                HStack(spacing: 12) {
+                    Text(summary).font(.caption)
+                    Button {
+                        NSWorkspace.shared.activateFileViewerSelecting([dir])
+                    } label: {
+                        Label("Reveal Report", systemImage: "folder")
+                    }
+                    .controlSize(.small)
+                    Spacer()
+                }
+            case .failed(let message):
+                Text(message)
+                    .font(.caption)
+                    .foregroundStyle(.red)
+            }
+        }
+        .padding(12)
     }
 
     // MARK: - agent loop bar
@@ -532,5 +590,100 @@ private struct AIProfileEditorPane: View {
         oauthExpiresAt = nil
         oauthState = .idle
         persist()
+    }
+}
+
+// MARK: - Benchmark state
+
+@MainActor
+final class AIBenchmarkUIState: ObservableObject {
+    enum Phase: Equatable {
+        case idle
+        case running(completed: Int, total: Int, currentCase: String?)
+        case finished(summary: String, reportDir: URL)
+        case failed(String)
+    }
+
+    @Published private(set) var phase: Phase = .idle
+
+    private var task: Task<Void, Never>?
+
+    var isRunning: Bool {
+        if case .running = phase { return true }
+        return false
+    }
+
+    func run() async {
+        cancel()
+        let cases = AIEvalDataset.loadStandard()
+        guard !cases.isEmpty else {
+            phase = .failed("No benchmark cases found in Script.bundle.")
+            return
+        }
+        let settings = AISettingsStore.shared.load()
+        guard settings.profile.isConfigured else {
+            phase = .failed("Active profile is not configured.")
+            return
+        }
+        let totalJobs = cases.count * 3
+        phase = .running(completed: 0, total: totalJobs, currentCase: nil)
+
+        task = Task {
+            let report = await AIEvalRunner.shared.run(
+                cases: cases,
+                settings: settings,
+                attemptsPerCase: 3,
+                parallelism: 3,
+                onProgress: { progress in
+                    Task { @MainActor [weak self] in
+                        guard let self else { return }
+                        if case .running = self.phase {
+                            self.phase = .running(
+                                completed: progress.completed,
+                                total: progress.total,
+                                currentCase: progress.currentCase
+                            )
+                        }
+                    }
+                }
+            )
+            await self.finish(with: report)
+        }
+        await task?.value
+    }
+
+    func cancel() {
+        task?.cancel()
+        task = nil
+    }
+
+    private func finish(with report: AIEvalReport) async {
+        do {
+            let dir = try AIEvalReportWriter.write(report)
+            let summary = String(
+                format: "%.1f%% pass · %d perfect / %d total · %@ · tokens %@",
+                report.overallPassRate * 100,
+                report.perfectCases,
+                report.totalCases,
+                AIBenchmarkUIState.formatDuration(report.totalDuration),
+                AIBenchmarkUIState.formatInt(report.totalTokens)
+            )
+            phase = .finished(summary: summary, reportDir: dir)
+        } catch {
+            phase = .failed(error.localizedDescription)
+        }
+    }
+
+    private static func formatDuration(_ t: TimeInterval) -> String {
+        let total = Int(t)
+        let m = total / 60
+        let s = total % 60
+        return "\(m)m\(s)s"
+    }
+
+    private static func formatInt(_ n: Int) -> String {
+        let f = NumberFormatter()
+        f.numberStyle = .decimal
+        return f.string(from: NSNumber(value: n)) ?? "\(n)"
     }
 }

@@ -32,6 +32,9 @@
 		A202000A00000000000000B0 /* AIKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201000A00000000000000B0 /* AIKeychain.swift */; };
 		A202000B00000000000000B0 /* AILocalOAuthServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201000B00000000000000B0 /* AILocalOAuthServer.swift */; };
 		A202000C00000000000000B0 /* AIOpenAIOAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201000C00000000000000B0 /* AIOpenAIOAuth.swift */; };
+		A202000D00000000000000B0 /* AIEvalCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201000D00000000000000B0 /* AIEvalCase.swift */; };
+		A202000E00000000000000B0 /* AIEvalRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201000E00000000000000B0 /* AIEvalRunner.swift */; };
+		A202000F00000000000000B0 /* AIEvalReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = A201000F00000000000000B0 /* AIEvalReport.swift */; };
 		A204000100000000000000B0 /* SettingAIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A203000100000000000000B0 /* SettingAIView.swift */; };
 		A204000200000000000000B0 /* AIGenerateWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A203000200000000000000B0 /* AIGenerateWindowView.swift */; };
 		A206000300000000000000B0 /* SwiftOpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = A206000200000000000000B0 /* SwiftOpenAI */; };
@@ -246,6 +249,9 @@
 		A201000A00000000000000B0 /* AIKeychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIKeychain.swift; sourceTree = "<group>"; };
 		A201000B00000000000000B0 /* AILocalOAuthServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AILocalOAuthServer.swift; sourceTree = "<group>"; };
 		A201000C00000000000000B0 /* AIOpenAIOAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIOpenAIOAuth.swift; sourceTree = "<group>"; };
+		A201000D00000000000000B0 /* AIEvalCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIEvalCase.swift; sourceTree = "<group>"; };
+		A201000E00000000000000B0 /* AIEvalRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIEvalRunner.swift; sourceTree = "<group>"; };
+		A201000F00000000000000B0 /* AIEvalReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIEvalReport.swift; sourceTree = "<group>"; };
 		A203000100000000000000B0 /* SettingAIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAIView.swift; sourceTree = "<group>"; };
 		A203000200000000000000B0 /* AIGenerateWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIGenerateWindowView.swift; sourceTree = "<group>"; };
 		CD9F1F298DF5C4FAED8AAD43 /* ScriptWidgetRuntimeHealth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptWidgetRuntimeHealth.swift; sourceTree = "<group>"; };
@@ -397,9 +403,20 @@
 				A201000A00000000000000B0 /* AIKeychain.swift */,
 				A201000B00000000000000B0 /* AILocalOAuthServer.swift */,
 				A201000C00000000000000B0 /* AIOpenAIOAuth.swift */,
+				A205000400000000000000B0 /* Eval */,
 			);
 			name = AI;
 			path = ../Shared/ScriptWidgetRuntime/AI;
+			sourceTree = "<group>";
+		};
+		A205000400000000000000B0 /* Eval */ = {
+			isa = PBXGroup;
+			children = (
+				A201000D00000000000000B0 /* AIEvalCase.swift */,
+				A201000E00000000000000B0 /* AIEvalRunner.swift */,
+				A201000F00000000000000B0 /* AIEvalReport.swift */,
+			);
+			path = Eval;
 			sourceTree = "<group>";
 		};
 		A205000200000000000000B0 /* AIGenerate */ = {
@@ -984,6 +1001,9 @@
 				A202000A00000000000000B0 /* AIKeychain.swift in Sources */,
 				A202000B00000000000000B0 /* AILocalOAuthServer.swift in Sources */,
 				A202000C00000000000000B0 /* AIOpenAIOAuth.swift in Sources */,
+				A202000D00000000000000B0 /* AIEvalCase.swift in Sources */,
+				A202000E00000000000000B0 /* AIEvalRunner.swift in Sources */,
+				A202000F00000000000000B0 /* AIEvalReport.swift in Sources */,
 				A202000100000000000000B0 /* AISettings.swift in Sources */,
 				A202000200000000000000B0 /* AIReferenceSnapshot.swift in Sources */,
 				A202000300000000000000B0 /* PromptBuilder.swift in Sources */,

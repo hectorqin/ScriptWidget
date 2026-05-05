@@ -12,7 +12,7 @@ import Foundation
 import CoreGraphics
 #endif
 
-enum AIWidgetSize: String, CaseIterable, Identifiable {
+enum AIWidgetSize: String, CaseIterable, Identifiable, Codable {
     case small
     case medium
     case large
